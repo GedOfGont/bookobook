@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookoBook</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen p-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6  text-center">📚 BookoBook</h1>
+    <div class="w-1/2 mx-auto mb-4">
+        <input type="search" name="keyword" placeholder="Kitap ara..." hx-get="/books/search"
+            hx-trigger="keyup changed delay:300ms" hx-target="#book-list" hx-swap="outerHTML"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+    </div>
+    <div th:replace="fragments/book-list :: bookList" hx-get="/books/fragment" hx-trigger="load">
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6 w-1/2 mx-auto">
+        <h2 class="text-lg font-semibold text-gray-700 mb-4">Yeni Kitap Ekle</h2>
+        <form hx-post="/add" hx-target="#book-list" hx-swap="outerHTML" hx-on::after-request
+            class="flex gap-4 items-center">
+            <input type="text" name="title" id="title" required placeholder="Kitap Adı"
+                class="border border-gray-300 rounded-lg px-4 py-2 flex-1 focus:outline-none focus:ring-blue-400">
+            <input type="text" name="author" id="author" placeholder="Yazar"
+                class="border border-gray-300 rounded-lg px-4 py-2 flex-1 focus:outline-none focus:ring-blue-400">
+            <label class="flex items-center gap-2 text-gray-600">
+                <input type="checkbox" name="read" id="read" class="w-4 h-4">Okundu
+            </label>
+            <button type="submit"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-medium">Ekle</button>
+        </form>
+    </div>
+</body>
+
+</html>
