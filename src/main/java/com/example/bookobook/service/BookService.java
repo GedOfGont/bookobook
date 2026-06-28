@@ -3,22 +3,27 @@ package com.example.bookobook.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.bookobook.model.Book;
+import com.example.bookobook.model.User;
 import com.example.bookobook.repository.BookRepository;
+import com.example.bookobook.repository.UserRepository;
 
 @Service
 public class BookService {
 
     private BookRepository bookRepository;
+    private UserRepository userRepository;
 
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Book> getAll() {
-        return bookRepository.findAll();
+        return bookRepository.findByUser(getCurrentUser());
     }
 
     public Optional<Book> findBookById(Long id) {
@@ -26,6 +31,7 @@ public class BookService {
     }
 
     public void addBook(Book book) {
+        book.setUser(getCurrentUser());
         bookRepository.save(book);
     }
 
@@ -43,5 +49,10 @@ public class BookService {
 
     public List<Book> search(String keyword) {
         return bookRepository.search(keyword);
+    }
+
+    public User getCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername(username).orElseThrow();
     }
 }

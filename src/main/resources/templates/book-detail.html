@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" th:content="${_csrf.token}">
     <title>Book Detail</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 </head>
 
-<body class="bg-gray-100 min-h-screen p-8">
+<body hx-headers='js:{"X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]").content}'
+      class="bg-gray-100 min-h-screen p-8">
     <div class="w-1/2 mx-auto">
         <a href="/books" class="text-blue-400 text-base">← Geri</a>
         <div class="bg-white rounded-xl shadow m-8 p-8">

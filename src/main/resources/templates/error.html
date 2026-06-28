@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hata</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white rounded-xl shadow p-12 text-center">
+        <h1 class="text-6xl font-bold text-gray-300 mb-4" th:text="${status}">404</h1>
+        <p class="text-gray-600 mb-6" th:text="${error}">Sayfa bulunamadı</p>
+        <a href="/books" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg">
+            Ana Sayfaya Dön
+        </a>
+    </div>
+</body>
+</html>
